@@ -1,10 +1,5 @@
 use crate::input::{
-    metadata::YoutubeDlOutput,
-    AudioStream,
-    AudioStreamError,
-    AuxMetadata,
-    Compose,
-    HttpRequest,
+    metadata::YoutubeDlOutput, AudioStream, AudioStreamError, AuxMetadata, Compose, HttpRequest,
     Input,
 };
 use async_trait::async_trait;
@@ -131,13 +126,7 @@ impl<'a> YoutubeDl<'a> {
         n_results: usize,
     ) -> Result<Vec<YoutubeDlOutput>, AudioStreamError> {
         let query_str = self.query.as_cow_str(n_results);
-        let ytdl_args = [
-            "-j",
-            &query_str,
-            "-f",
-            "ba[abr>0][vcodec=none]/best",
-            "--no-playlist",
-        ];
+        let ytdl_args = ["-j", &query_str, "-f", "bestaudio", "--no-playlist"];
 
         let output = Command::new(self.program)
             .args(self.user_args.clone())
